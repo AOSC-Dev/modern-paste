@@ -37,6 +37,12 @@ def submit_paste():
             constants.api.PASTE_ATTACHMENTS_DISABLED_FAILURE_CODE,
         )
 
+    if config.REQUIRE_LOGIN_TO_ATTACH and not current_user.is_authenticated and len(data.get('attachments', [])) > 0:
+        return (
+            flask.jsonify(constants.api.PASTE_ATTACHMENTS_DISABLED_FAILURE),
+            constants.api.PASTE_ATTACHMENTS_DISABLED_FAILURE_CODE,
+        )
+
     is_attachment_too_large = [
         # The data is encoded as a string: each character takes 1 B
         # The base64-encoded string is at 4/3x larger in size than the raw file

@@ -67,6 +67,11 @@ ENABLE_USER_REGISTRATION = True
 # This is useful for private or internal installations that aren't intended for public use.
 REQUIRE_LOGIN_TO_PASTE = False
 
+# Choose to require users to be logged in to post attachments
+# If True, the web interface will only allow users to add attachments if they are logged in
+# This is useful to prevent abuse of attachments system
+REQUIRE_LOGIN_TO_ATTACH = False
+
 # AES key for generating encrypted IDs
 # This is only relevant if USE_ENCRYPTED_IDS above is True. If not, this config parameter can be ignored.
 # It is recommended, but not strictly required, for you to replace the string below with the output of os.urandom(32),
