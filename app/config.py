@@ -31,7 +31,12 @@ MAX_ATTACHMENT_SIZE = 0
 
 # Location to store paste attachments
 # Please use an absolute path and ensure that it is writable by www-data.
+# For Google Cloud Storage, this should be relative to your bucket
 ATTACHMENTS_DIR = '/var/www/modern-paste-attachments'
+
+# Google Cloud Storage bucket
+# Set to True if you're using Cloud Storage
+USE_CLOUD_STORAGE = False
 
 # Database host
 # Optionally change the host on which the MySQL server is running; defaults to the same server hosting the site.

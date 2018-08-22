@@ -1,4 +1,5 @@
 import flask
+import logging
 
 import config
 import database.attachment
@@ -92,7 +93,25 @@ def paste_attachment(paste_id, file_name):
             paste_id=util.cryptography.get_decid(paste_id),
             hash_name=attachment.hash_name,
         )
-        resp = flask.make_response(open(file_path).read())
+        if not config.USE_CLOUD_STORAGE:
+            contents = open(file_path).read()
+        else:
+            try:
+                import cloudstorage as gcs
+                from google.appengine.api import app_identity
+                import os
+                bucket = os.environ.get('BUCKET_NAME',
+                                        app_identity.get_default_gcs_bucket_name())
+                gcs_path = '/{}{}'.format(bucket, file_path)
+                logging.error('Fetching {}'.format(gcs_path))
+
+                gcs_file = gcs.open(gcs_path)
+                contents = gcs_file.read()
+                gcs_file.close()
+            except:
+                logging.exception('Cloud storage fetch failed')
+
+        resp = flask.make_response(contents)
         resp.headers['Content-Type'] = attachment.mime_type
         return resp
     except (PasteDoesNotExistException, InvalidIDException):
@@ -101,6 +120,7 @@ def paste_attachment(paste_id, file_name):
     except AttachmentDoesNotExistException:
         return 'No attachment with the given file name could be found.', 404
     except:
+        logging.exception('Undefined error fetching attachment')
         return 'Undefined error. Please open an issue at https://github.com/LINKIWI/modern-paste/issues', 500
 
 
