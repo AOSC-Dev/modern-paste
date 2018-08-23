@@ -1,3 +1,4 @@
+import base64
 import errno
 import os
 
@@ -66,9 +67,9 @@ def _store_attachment_file(paste_id, attachment_binary_data, attachment_hash_nam
         if exception.errno != errno.EEXIST:
             raise
 
-    # Write the attachment's base64-encoded data to a file
+    # Decode and write the attachment's data to a file
     with open(save_file_path, 'w') as attachment_file:
-        attachment_file.write(attachment_binary_data)
+        attachment_file.write(base64.b64decode(attachment_binary_data))
 
 
 def get_attachment_by_id(attachment_id, active_only=False):

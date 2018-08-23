@@ -1,5 +1,3 @@
-import base64
-
 import flask
 
 import config
@@ -94,7 +92,7 @@ def paste_attachment(paste_id, file_name):
             paste_id=util.cryptography.get_decid(paste_id),
             hash_name=attachment.hash_name,
         )
-        resp = flask.make_response(base64.b64decode(open(file_path).read()))
+        resp = flask.make_response(open(file_path).read())
         resp.headers['Content-Type'] = attachment.mime_type
         return resp
     except (PasteDoesNotExistException, InvalidIDException):
