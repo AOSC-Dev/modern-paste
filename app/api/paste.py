@@ -13,6 +13,7 @@ import constants.api
 import database.attachment
 import database.paste
 import database.user
+import logging
 import util.cryptography
 
 
@@ -94,6 +95,7 @@ def submit_paste():
         ]
         return flask.jsonify(resp_data), constants.api.SUCCESS_CODE
     except:
+        logging.exception('')
         return flask.jsonify(constants.api.UNDEFINED_FAILURE), constants.api.UNDEFINED_FAILURE_CODE
 
 
@@ -127,6 +129,7 @@ def deactivate_paste():
     except (PasteDoesNotExistException, InvalidIDException):
         return flask.jsonify(constants.api.NONEXISTENT_PASTE_FAILURE), constants.api.NONEXISTENT_PASTE_FAILURE_CODE
     except:
+        logging.exception('')
         return flask.jsonify(constants.api.UNDEFINED_FAILURE), constants.api.UNDEFINED_FAILURE_CODE
 
 
@@ -156,6 +159,7 @@ def set_paste_password():
     except (PasteDoesNotExistException, InvalidIDException):
         return flask.jsonify(constants.api.NONEXISTENT_PASTE_FAILURE), constants.api.NONEXISTENT_PASTE_FAILURE_CODE
     except:
+        logging.exception('')
         return flask.jsonify(constants.api.UNDEFINED_FAILURE), constants.api.UNDEFINED_FAILURE_CODE
 
 
@@ -194,6 +198,7 @@ def paste_details():
     except (PasteDoesNotExistException, UserDoesNotExistException, InvalidIDException):
         return flask.jsonify(constants.api.NONEXISTENT_PASTE_FAILURE), constants.api.NONEXISTENT_PASTE_FAILURE_CODE
     except:
+        logging.exception('')
         return flask.jsonify(constants.api.UNDEFINED_FAILURE), constants.api.UNDEFINED_FAILURE_CODE
 
 
@@ -213,6 +218,7 @@ def pastes_for_user():
             ],
         }), constants.api.SUCCESS_CODE
     except:
+        logging.exception('')
         return flask.jsonify(constants.api.UNDEFINED_FAILURE), constants.api.UNDEFINED_FAILURE_CODE
 
 
@@ -232,6 +238,7 @@ def recent_pastes():
             ],
         }), constants.api.SUCCESS_CODE
     except:
+        logging.exception('')
         return flask.jsonify(constants.api.UNDEFINED_FAILURE), constants.api.UNDEFINED_FAILURE_CODE
 
 
@@ -251,4 +258,5 @@ def top_pastes():
             ],
         }), constants.api.SUCCESS_CODE
     except:
+        logging.exception('')
         return flask.jsonify(constants.api.UNDEFINED_FAILURE), constants.api.UNDEFINED_FAILURE_CODE
