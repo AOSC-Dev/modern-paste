@@ -17,7 +17,7 @@ class Paste(db.Model):
     title = db.Column(db.Text, default=None)
     language = db.Column(db.Text)
     password_hash = db.Column(db.Text, default=None)
-    contents = db.Column(db.Text)
+    contents = db.Column(db.Text(length=4294967295))
     deactivation_token = db.Column(db.Text)
     views = db.Column(db.Integer)
     is_api_post = db.Column(db.Boolean)
