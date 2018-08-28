@@ -18,7 +18,7 @@ import util.cryptography
 
 
 @app.route(PasteSubmitURI.path, methods=['POST'])
-@require_form_args(['contents'])
+@require_form_args(['contents'], allow_blank_values=True)
 @optional_login_api
 def submit_paste():
     """
