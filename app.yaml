@@ -5,6 +5,7 @@ threadsafe: true
 handlers:
 - url: /.*
   script: wsgi.application
+  secure: always
 
 libraries:
 - name: flask
