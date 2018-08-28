@@ -111,6 +111,7 @@ def paste_attachment(paste_id, file_name):
             except:
                 logging.exception('Cloud storage fetch failed')
 
+        database.paste.increment_paste_views(util.cryptography.get_decid(paste_id))
         resp = flask.make_response(contents)
         resp.headers['Content-Type'] = attachment.mime_type
         return resp
