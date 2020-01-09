@@ -94,7 +94,7 @@ def submit_paste():
             for attachment in new_attachments
         ]
         return flask.jsonify(resp_data), constants.api.SUCCESS_CODE
-    except:
+    except Exception:
         logging.exception('')
         return flask.jsonify(constants.api.UNDEFINED_FAILURE), constants.api.UNDEFINED_FAILURE_CODE
 
@@ -128,7 +128,7 @@ def deactivate_paste():
         }), constants.api.AUTH_FAILURE_CODE
     except (PasteDoesNotExistException, InvalidIDException):
         return flask.jsonify(constants.api.NONEXISTENT_PASTE_FAILURE), constants.api.NONEXISTENT_PASTE_FAILURE_CODE
-    except:
+    except Exception:
         logging.exception('')
         return flask.jsonify(constants.api.UNDEFINED_FAILURE), constants.api.UNDEFINED_FAILURE_CODE
 
@@ -158,7 +158,7 @@ def set_paste_password():
         }), constants.api.SUCCESS_CODE
     except (PasteDoesNotExistException, InvalidIDException):
         return flask.jsonify(constants.api.NONEXISTENT_PASTE_FAILURE), constants.api.NONEXISTENT_PASTE_FAILURE_CODE
-    except:
+    except Exception:
         logging.exception('')
         return flask.jsonify(constants.api.UNDEFINED_FAILURE), constants.api.UNDEFINED_FAILURE_CODE
 
@@ -197,7 +197,7 @@ def paste_details():
             }), constants.api.AUTH_FAILURE_CODE
     except (PasteDoesNotExistException, UserDoesNotExistException, InvalidIDException):
         return flask.jsonify(constants.api.NONEXISTENT_PASTE_FAILURE), constants.api.NONEXISTENT_PASTE_FAILURE_CODE
-    except:
+    except Exception:
         logging.exception('')
         return flask.jsonify(constants.api.UNDEFINED_FAILURE), constants.api.UNDEFINED_FAILURE_CODE
 
@@ -217,7 +217,7 @@ def pastes_for_user():
                 for paste in database.paste.get_all_pastes_for_user(current_user.user_id, active_only=True)
             ],
         }), constants.api.SUCCESS_CODE
-    except:
+    except Exception:
         logging.exception('')
         return flask.jsonify(constants.api.UNDEFINED_FAILURE), constants.api.UNDEFINED_FAILURE_CODE
 
@@ -237,7 +237,7 @@ def recent_pastes():
                 paste.as_dict() for paste in database.paste.get_recent_pastes(data['page_num'], data['num_per_page'])
             ],
         }), constants.api.SUCCESS_CODE
-    except:
+    except Exception:
         logging.exception('')
         return flask.jsonify(constants.api.UNDEFINED_FAILURE), constants.api.UNDEFINED_FAILURE_CODE
 
@@ -257,6 +257,6 @@ def top_pastes():
                 paste.as_dict() for paste in database.paste.get_top_pastes(data['page_num'], data['num_per_page'])
             ],
         }), constants.api.SUCCESS_CODE
-    except:
+    except Exception:
         logging.exception('')
         return flask.jsonify(constants.api.UNDEFINED_FAILURE), constants.api.UNDEFINED_FAILURE_CODE

@@ -69,13 +69,12 @@ def _store_attachment_file(paste_id, attachment_binary_data, attachment):
                 raise
 
         # Decode and write the attachment's data to a file
-        with open(save_file_path, 'w') as attachment_file:
+        with open(save_file_path, 'wb') as attachment_file:
             attachment_file.write(base64.b64decode(attachment_binary_data))
     else:
         try:
             import cloudstorage as gcs
             from google.appengine.api import app_identity
-            import os
 
             bucket = os.environ.get('BUCKET_NAME',
                                     app_identity.get_default_gcs_bucket_name())
@@ -87,7 +86,7 @@ def _store_attachment_file(paste_id, attachment_binary_data, attachment):
                                 retry_params=gcs.RetryParams(backoff_factor=1.1))
             gcs_file.write(str(base64.b64decode(attachment_binary_data)))
             gcs_file.close()
-        except:
+        except Exception:
             logging.exception('Cloud storage store failed')
 
 

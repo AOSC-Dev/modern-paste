@@ -39,27 +39,27 @@ if __name__ == '__main__':
     )
     args = parser.parse_args()
 
-    num_args = len(filter(lambda arg: arg, [args.config_environment, args.dev, args.prod]))
+    num_args = len([arg for arg in [args.config_environment, args.dev, args.prod] if arg])
     if num_args > 1:
-        print 'Arguments are ambiguous. Choose only one of --config-environment, --dev, and --prod.\nExiting.'
+        print('Arguments are ambiguous. Choose only one of --config-environment, --dev, and --prod.\nExiting.')
         sys.exit(1)
     if num_args == 0:
-        print 'No arguments passed. Choose only one of --config-environment, --dev, and --prod.\nExiting.'
+        print('No arguments passed. Choose only one of --config-environment, --dev, and --prod.\nExiting.')
         sys.exit(1)
 
     style = 'expanded'
     if args.config_environment:
         if config.BUILD_ENVIRONMENT == constants.build_environment.DEV:
-            print 'Configuration in config.py specified a dev environment.\n' \
-                  'Compiling SCSS in non-minified mode.'
+            print('Configuration in config.py specified a dev environment.\n'
+                  'Compiling SCSS in non-minified mode.')
         else:
-            print 'Configuration in config.py specified a prod environment.\n' \
-                  'Compiling SCSS in minified mode.'
+            print('Configuration in config.py specified a prod environment.\n'
+                  'Compiling SCSS in minified mode.')
             style = 'compressed'
     if args.dev:
-        print 'Compiling SCSS in non-minified mode.'
+        print('Compiling SCSS in non-minified mode.')
     if args.prod:
-        print 'Compiling SCSS in minified mode.'
+        print('Compiling SCSS in minified mode.')
         style = 'compressed'
 
     scss_files = []
@@ -68,14 +68,13 @@ if __name__ == '__main__':
             if not scss_file.startswith('_'):
                 scss_files.append((directory, scss_file))
 
-    print 'CSS build started.'
+    print('CSS build started.')
     for directory, scss_file in scss_files:
         scss_file_path = '{directory}/{scss_file}'.format(directory=directory, scss_file=scss_file)
         css_file_path = 'app/static/build/css/{css_file}'.format(css_file=scss_file.replace('.scss', '.css'))
-        print 'Compiling CSS {scss_path} --> {css_path}'.format(scss_path=scss_file_path, css_path=css_file_path)
+        print('Compiling CSS {scss_path} --> {css_path}'.format(scss_path=scss_file_path, css_path=css_file_path))
         abort_if_error(subprocess.call([
-            'sass',
-            '{scss_path}:{css_path}'.format(scss_path=scss_file_path, css_path=css_file_path),
-            '--style', style,
+            'sassc',
+            '--style', style, scss_file_path, css_file_path
         ]))
-    print 'CSS build complete.'
+    print('CSS build complete.')

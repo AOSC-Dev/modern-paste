@@ -79,12 +79,12 @@ def get_uri_path():
     :raises ImportError: If one or both of the URI module or class name is invalid
     """
     def uri(uri_module, uri_name, *args, **kwargs):
-        uri_module = __import__('uri.' + uri_module, globals(), locals(), [uri_name], -1)
+        uri_module = __import__('uri.' + uri_module, globals(), locals(), [uri_name], 0)
         uri_class = getattr(uri_module, uri_name)
         return uri_class.uri(*args, **kwargs)
 
     def full_uri(uri_module, uri_name, *args, **kwargs):
-        uri_module = __import__('uri.' + uri_module, globals(), locals(), [uri_name], -1)
+        uri_module = __import__('uri.' + uri_module, globals(), locals(), [uri_name], 0)
         uri_class = getattr(uri_module, uri_name)
         return uri_class.full_uri(*args, **kwargs)
 

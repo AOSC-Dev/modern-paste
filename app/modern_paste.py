@@ -1,6 +1,8 @@
-from flask import Flask
 import flask_login
 import flask_sqlalchemy
+
+from flask import Flask
+from views import *
 
 app = Flask(__name__)
 app.config.from_object('flask_config')
@@ -11,10 +13,6 @@ session = db.session
 
 login_manager = flask_login.LoginManager()
 login_manager.init_app(app)
-
-
-import models
-from views import *
 
 
 if __name__ == '__main__':

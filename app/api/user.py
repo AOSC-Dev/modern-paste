@@ -54,7 +54,7 @@ def create_new_user():
             constants.api.MESSAGE: 'Email address {email_addr} is invalid'.format(email_addr=data.get('email')),
             constants.api.FAILURE: 'invalid_email_failure',
         }), constants.api.INCOMPLETE_PARAMS_FAILURE_CODE
-    except:
+    except Exception:
         return flask.jsonify(constants.api.UNDEFINED_FAILURE), constants.api.UNDEFINED_FAILURE_CODE
 
 
@@ -95,7 +95,7 @@ def update_user_details():
             constants.api.MESSAGE: 'Email address {email_addr} is invalid'.format(email_addr=data.get('email')),
             constants.api.FAILURE: 'invalid_email_failure',
         }), constants.api.INCOMPLETE_PARAMS_FAILURE_CODE
-    except:
+    except Exception:
         return flask.jsonify(constants.api.UNDEFINED_FAILURE), constants.api.UNDEFINED_FAILURE_CODE
 
 
@@ -112,7 +112,7 @@ def deactivate_user():
             constants.api.MESSAGE: None,
             'username': current_user.username,
         }), constants.api.SUCCESS_CODE
-    except:
+    except Exception:
         return flask.jsonify(constants.api.UNDEFINED_FAILURE), constants.api.UNDEFINED_FAILURE_CODE
 
 
@@ -128,7 +128,7 @@ def api_key_regenerate():
             constants.api.MESSAGE: None,
             'api_key': database.user.generate_new_api_key(current_user.user_id).api_key,
         }), constants.api.SUCCESS_CODE
-    except:
+    except Exception:
         return flask.jsonify(constants.api.UNDEFINED_FAILURE), constants.api.UNDEFINED_FAILURE_CODE
 
 
@@ -144,7 +144,7 @@ def check_username_availability():
             'username': data['username'],
             'is_available': database.user.is_username_available(data['username']),
         }), constants.api.SUCCESS_CODE
-    except:
+    except Exception:
         return flask.jsonify(constants.api.UNDEFINED_FAILURE), constants.api.UNDEFINED_FAILURE_CODE
 
 
@@ -160,5 +160,5 @@ def validate_email_address():
             'email': data['email'],
             'is_valid': database.user.is_email_address_valid(data['email']),
         }), constants.api.SUCCESS_CODE
-    except:
+    except Exception:
         return flask.jsonify(constants.api.UNDEFINED_FAILURE), constants.api.UNDEFINED_FAILURE_CODE

@@ -108,7 +108,7 @@ def paste_attachment(paste_id, file_name):
                 gcs_file = gcs.open(gcs_path)
                 contents = gcs_file.read()
                 gcs_file.close()
-            except:
+            except Exception:
                 logging.exception('Cloud storage fetch failed')
 
         database.paste.increment_paste_views(util.cryptography.get_decid(paste_id))
@@ -120,7 +120,7 @@ def paste_attachment(paste_id, file_name):
                'It\'s also possible that the paste has been deactivated or has expired.', 404
     except AttachmentDoesNotExistException:
         return 'No attachment with the given file name could be found.', 404
-    except:
+    except Exception:
         logging.exception('Undefined error fetching attachment')
         return 'Undefined error. Please open an issue at https://github.com/LINKIWI/modern-paste/issues', 500
 

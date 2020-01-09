@@ -1,3 +1,3 @@
-from attachment import *
-from paste import *
-from user import *
+from .attachment import *
+from .paste import *
+from .user import *

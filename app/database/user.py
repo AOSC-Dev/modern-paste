@@ -174,7 +174,7 @@ def is_email_address_valid(email_addr):
     """
     Validate that the input is an email address. This won't catch all error cases, but will catch
     the most outrageous ones. I believe in the fundamental goodwill of humanity, e.g. that users
-    will not deliberately enter a stupid email address like aa\s\d\@derp..com
+    will not deliberately enter a stupid email address like aa\\s\\d\\@derp..com
 
     :param email_addr: Email address, type str
     :return: True if the email address is valid, False otherwise

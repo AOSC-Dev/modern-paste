@@ -1,4 +1,4 @@
-from base_uri import URI
+from .base_uri import URI
 
 
 class HomeURI(URI):

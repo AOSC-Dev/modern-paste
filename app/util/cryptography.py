@@ -35,7 +35,7 @@ def get_encid(decid):
     """
     try:
         int(decid)
-    except:
+    except Exception:
         raise InvalidIDException('Decrypted ID must be int-castable')
 
     # Slashes are not URL-friendly; replace them with dashes
@@ -64,7 +64,7 @@ def get_decid(encid, force=False):
         if not config.USE_ENCRYPTED_IDS:
             # If we're not configured to use encids, we can assume the passed encid is already decrypted
             return encid
-    except:
+    except Exception:
         if not config.USE_ENCRYPTED_IDS and not force:
             # We expected a decid (e.g., an int-castable one)
             raise InvalidIDException('The encrypted ID is not valid')
@@ -73,7 +73,7 @@ def get_decid(encid, force=False):
         str(encid)
         cipher = AES.new(config.ID_ENCRYPTION_KEY, AES.MODE_CBC, config.ID_ENCRYPTION_IV)
         return int(cipher.decrypt(_base64_decode(str(encid))).rstrip(PADDING_CHAR))
-    except:
+    except Exception:
         raise InvalidIDException('The encrypted ID is not valid')
 
 
@@ -103,7 +103,7 @@ def secure_hash(s, iterations=10000):
     :param iterations: Number of hash iterations to use
     :return: A string representing a secure hash of the string
     """
-    hash_result = SHA256.new(data=str(s)).hexdigest()
-    for i in range(iterations):
-        hash_result = SHA256.new(data=hash_result).hexdigest()
+    hash_result = SHA256.new(data=bytes(s, 'utf-8')).hexdigest()
+    for _ in range(iterations):
+        hash_result = SHA256.new(data=hash_result.encode('utf-8')).hexdigest()
     return hash_result
