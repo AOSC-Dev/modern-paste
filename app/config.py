@@ -81,15 +81,15 @@ REQUIRE_LOGIN_TO_ATTACH = False
 # This is only relevant if USE_ENCRYPTED_IDS above is True. If not, this config parameter can be ignored.
 # It is recommended, but not strictly required, for you to replace the string below with the output of os.urandom(32),
 # so that the encrypted IDs generated for the app are specific to this installation.
-ID_ENCRYPTION_KEY = '6\x80\x18\xdc\xcf \xad\x14U\xa7\x05X\x7f\x81\x01\xd5\x19i\xf3S;\xcaL\xcf\xe2\x8d\x82\x1a\x12\xd9}\x8c'
+ID_ENCRYPTION_KEY = b'6\x80\x18\xdc\xcf \xad\x14U\xa7\x05X\x7f\x81\x01\xd5\x19i\xf3S;\xcaL\xcf\xe2\x8d\x82\x1a\x12\xd9}\x8c'
 
 # AES iv for CBC block cipher operation, advice as per key gen above
-ID_ENCRYPTION_IV = '1234567890123456'
+ID_ENCRYPTION_IV = b'1234567890123456'
 
 # Flask session secret key
 # IMPORTANT NOTE: Open up a Python terminal, and replace the below with the output of os.urandom(32)
 # This secret key should be different for every installation of Modern Paste.
-FLASK_SECRET_KEY = '\x90]\xd4SDI\xb9h\x89\x01\x9f\xa5\xd9\xa1\xb6\xf8]\xb5\x077\x1d\xceB^\x00+\xf2\xcfs\xef*\xa0'
+FLASK_SECRET_KEY = b'\x90]\xd4SDI\xb9h\x89\x01\x9f\xa5\xd9\xa1\xb6\xf8]\xb5\x077\x1d\xceB^\x00+\xf2\xcfs\xef*\xa0'
 
 # Languages
 # A list of all languages you want to support with the app. Add 'text' for plain text support.

@@ -94,7 +94,8 @@ def paste_attachment(paste_id, file_name):
             hash_name=attachment.hash_name,
         )
         if not config.USE_CLOUD_STORAGE:
-            contents = open(file_path).read()
+            with open(file_path, 'rb') as fp:
+                contents = fp.read()
         else:
             try:
                 import cloudstorage as gcs

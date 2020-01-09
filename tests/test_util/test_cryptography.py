@@ -37,7 +37,7 @@ class TestCryptography(unittest.TestCase):
         self.assertRaises(
             InvalidIDException,
             util.cryptography.get_decid,
-            u'\ue863',
+            '\ue863',
         )
 
         config.USE_ENCRYPTED_IDS = True

@@ -24,7 +24,7 @@ from uri.main import *
 class TestDecorators(util.testing.DatabaseTestCase):
     def test_context_config(self):
         config_constants = api.decorators.context_config()
-        for config_item in filter(lambda item: item == item.upper(), dir(config)):
+        for config_item in [item for item in dir(config) if item == item.upper()]:
             self.assertIn(config_item, config_constants)
 
     def test_render_view(self):

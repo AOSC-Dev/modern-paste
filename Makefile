@@ -33,9 +33,9 @@ prod:
 	python build/build_css.py --prod
 
 dependencies:
-	java -version
-	sudo gem install sass
-	sudo npm install -g uglify-js
+	@java -version && echo "Java installed"
+	@sassc -v || echo "Please install sassc"
+	@uglifyjs --version || sudo npm install -g uglify-js
 	pip install -r requirements.txt
 	pre-commit install
 	git submodule init

@@ -69,7 +69,7 @@ class TestPaste(util.testing.DatabaseTestCase):
         self.assertIsNotNone(resp_data['post_time'])
         self.assertIsNotNone(resp_data['paste_id_repr'])
         self.assertTrue(resp_data['is_active'])
-        self.assertEquals('contents', resp_data['contents'])
+        self.assertEqual('contents', resp_data['contents'])
         self.assertIsNotNone(resp_data['deactivation_token'])
 
         resp = self.client.post(
@@ -85,7 +85,7 @@ class TestPaste(util.testing.DatabaseTestCase):
         self.assertIsNotNone(resp_data['post_time'])
         self.assertIsNotNone(resp_data['paste_id_repr'])
         self.assertTrue(resp_data['is_active'])
-        self.assertEquals('contents', resp_data['contents'])
+        self.assertEqual('contents', resp_data['contents'])
         self.assertIsNone(database.paste.get_paste_by_id(1).user_id)
 
     def test_submit_paste_logged_in(self):
@@ -99,7 +99,7 @@ class TestPaste(util.testing.DatabaseTestCase):
             }),
             content_type='application/json',
         )
-        self.assertEquals(resp.status_code, constants.api.SUCCESS_CODE)
+        self.assertEqual(resp.status_code, constants.api.SUCCESS_CODE)
         resp = self.client.post(
             PasteSubmitURI.uri(),
             data=json.dumps({
@@ -112,7 +112,7 @@ class TestPaste(util.testing.DatabaseTestCase):
         self.assertIsNotNone(resp_data['post_time'])
         self.assertIsNotNone(resp_data['paste_id_repr'])
         self.assertTrue(resp_data['is_active'])
-        self.assertEquals('contents', resp_data['contents'])
+        self.assertEqual('contents', resp_data['contents'])
         self.assertIsNotNone(resp_data['deactivation_token'])
         self.assertEqual(user.user_id, database.paste.get_paste_by_id(util.cryptography.get_decid(resp_data['paste_id_repr'])).user_id)
 
@@ -163,7 +163,7 @@ class TestPaste(util.testing.DatabaseTestCase):
             content_type='application/json',
         )
         self.assertEqual(resp.status_code, constants.api.SUCCESS_CODE)
-        self.assertEqual(json.loads(resp.data)['details']['contents'], unicode('어머', 'utf8'))
+        self.assertEqual(json.loads(resp.data)['details']['contents'], '어머')
 
     def test_submit_paste_attachments_disabled(self):
         config.ENABLE_PASTE_ATTACHMENTS = False
@@ -372,7 +372,7 @@ class TestPaste(util.testing.DatabaseTestCase):
             }),
             content_type='application/json',
         )
-        self.assertEquals(resp.status_code, constants.api.SUCCESS_CODE)
+        self.assertEqual(resp.status_code, constants.api.SUCCESS_CODE)
         resp = self.client.post(
             PasteDeactivateURI.uri(),
             data=json.dumps({
@@ -843,10 +843,10 @@ class TestPaste(util.testing.DatabaseTestCase):
         for i in range(15):
             with mock.patch.object(time, 'time', return_value=time.time() + random.randint(-10000, 10000)):
                 pastes.append(util.testing.PasteFactory.generate(expiry_time=None))
-        recent_pastes_sorted = map(
+        recent_pastes_sorted = list(map(
             lambda paste: paste.as_dict(),
             sorted(pastes, key=lambda paste: paste.post_time, reverse=True),
-        )
+        ))
 
         resp = self.client.post(
             RecentPastesURI.uri(),

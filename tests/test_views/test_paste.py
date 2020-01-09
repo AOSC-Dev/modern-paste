@@ -1,5 +1,3 @@
-import StringIO
-import base64
 import time
 
 import flask
@@ -47,30 +45,30 @@ class TestPaste(util.testing.DatabaseTestCase):
 
     def test_paste_view_raw(self):
         # Non-existent paste
-        self.assertEqual('This paste either does not exist or has been deleted.', views.paste.paste_view_raw(-1).data)
+        self.assertEqual(b'This paste either does not exist or has been deleted.', views.paste.paste_view_raw(-1).data)
 
         # Password-protected, no password supplied
         paste = util.testing.PasteFactory.generate(password='password')
         self.assertIn(
-            'In order to view the raw contents of a password-protected paste',
+            b'In order to view the raw contents of a password-protected paste',
             views.paste.paste_view_raw(util.cryptography.get_id_repr(paste.paste_id)).data,
         )
 
         # Password-protected, wrong password supplied
         flask.request.args = {'password': 'invalid'}
         self.assertEqual(
-            'The password you supplied for this paste is not correct.',
+            b'The password you supplied for this paste is not correct.',
             views.paste.paste_view_raw(util.cryptography.get_id_repr(paste.paste_id)).data,
         )
 
         # Password-protected, correct password supplied
         flask.request.args = {'password': 'password'}
-        self.assertEqual(paste.contents, views.paste.paste_view_raw(util.cryptography.get_id_repr(paste.paste_id)).data)
+        self.assertEqual(paste.contents.encode('utf-8'), views.paste.paste_view_raw(util.cryptography.get_id_repr(paste.paste_id)).data)
 
         # Deactivated paste
         database.paste.deactivate_paste(paste.paste_id)
         self.assertEqual(
-            'This paste either does not exist or has been deleted.',
+            b'This paste either does not exist or has been deleted.',
             views.paste.paste_view_raw(util.cryptography.get_id_repr(paste.paste_id)).data,
         )
 
@@ -95,14 +93,12 @@ class TestPaste(util.testing.DatabaseTestCase):
         self.assertEqual(404, resp[1])
 
         # Valid input
-        with mock.patch('__builtin__.open') as mock_open:
-            mock_file_obj = mock.Mock(spec=file, wraps=StringIO.StringIO(base64.b64encode('file contents')))
-            mock_open.return_value = mock_file_obj
-
+        with mock.patch('builtins.open', mock.mock_open(read_data=b'file contents')) as m:
             resp = views.paste.paste_attachment(util.cryptography.get_id_repr(paste.paste_id), attachment.file_name)
-            self.assertEqual(1, mock_open.call_count)
+            self.assertEqual(1, m.call_count)
             self.assertIsNotNone(resp)
-            self.assertEqual('file contents', resp.get_data())
+            print(resp)
+            self.assertEqual(b'file contents', resp.get_data())
             self.assertEqual(200, resp.status_code)
 
         # Undefined server error

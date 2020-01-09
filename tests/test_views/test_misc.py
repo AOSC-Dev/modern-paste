@@ -23,7 +23,7 @@ class TestMisc(util.testing.DatabaseTestCase):
         api_documentation = views.misc.api_documentation_interface()
 
         # All generic error responses should be documented
-        for response_name in filter(lambda constant: constant.endswith('_FAILURE'), dir(constants.api)):
+        for response_name in [constant for constant in dir(constants.api) if constant.endswith('_FAILURE')]:
             self.assertIn(
                 getattr(constants.api, response_name)[constants.api.FAILURE],
                 api_documentation,
@@ -32,14 +32,15 @@ class TestMisc(util.testing.DatabaseTestCase):
             )
 
         # All API endpoints in the JSON data should be rendered in the template
-        documented_api_endpoints = json.loads(
-            open(os.path.realpath('app/templates/misc/api_documentation.json')).read()
-        )['api_endpoints']
+        with open(os.path.realpath('app/templates/misc/api_documentation.json')) as f:
+            documented_api_endpoints = json.loads(
+                f.read()
+            )['api_endpoints']
         for endpoint in documented_api_endpoints:
             self.assertIn(endpoint['name'].replace(' ', '-').lower(), api_documentation)
 
     def test_version(self):
-        version_string = views.misc.version().data.split('\n')
+        version_string = views.misc.version().data.splitlines()
         self.assertEqual(4, len(version_string))  # 4 lines of output
 
         # Ensure branch name is present
@@ -53,7 +54,7 @@ class TestMisc(util.testing.DatabaseTestCase):
         )
 
         # Ensure date is present
-        self.assertEqual(2, version_string[2].count(':'))
+        self.assertEqual(2, version_string[2].decode('utf-8').count(':'))
 
         # Ensure remote URL is present
         self.assertGreater(len(version_string[3]), 0)
