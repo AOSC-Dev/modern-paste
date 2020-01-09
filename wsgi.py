@@ -9,4 +9,6 @@ if not re.match('(Google App Engine/)|(Development/)', os.getenv('SERVER_SOFTWAR
     os.chdir(here)
 
 sys.path.insert(0, os.path.join(here, 'app'))
-from modern_paste import app as application
+
+from modern_paste import app  # noqa: E402
+application = app
