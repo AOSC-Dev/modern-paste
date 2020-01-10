@@ -22,6 +22,8 @@ def _base64_decode(data):
     """Decode base64, re-adding padding if needed."""
     to_add = len(data) % 4
     if to_add != 0:
+        if isinstance(data, str):
+            data = data.encode('utf-8')
         data += b'=' * (4 - to_add)
     return base64.b64decode(data, ALTCHARS)
 
@@ -86,7 +88,7 @@ def get_id_repr(raw_id):
     """
     if config.USE_ENCRYPTED_IDS:
         try:
-            return get_encid(raw_id)
+            return get_encid(raw_id).decode('utf-8')
         except InvalidIDException:
             # If we can't get an encid out of the ID, let's just assume it's already an encid
             # This is relatively unsafe is ok with due diligence in checking inputs before using this method.

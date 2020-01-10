@@ -132,7 +132,7 @@ class TestTemplating(unittest.TestCase):
         encid = util.cryptography.get_encid(decid)
 
         config.USE_ENCRYPTED_IDS = True
-        self.assertEqual(encid, id_repr(decid))
+        self.assertEqual(encid.decode('utf-8'), id_repr(decid))
         self.assertEqual(encid, id_repr(encid))
 
         config.USE_ENCRYPTED_IDS = False
