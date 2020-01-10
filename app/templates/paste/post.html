@@ -40,7 +40,7 @@
     <!--Paste language-->
     <div class="paste-language-container section-label">
         <p class="sans-serif regular size-1 light-gray less-spaced">PASTE LANGUAGE</p>
-        <select class="language-selector ubuntu-mono regular gray" name="languages" autocomplete="off">
+        <select class="btn btn-outline-dark dropdown-toggle language-selector ubuntu-mono regular gray" name="languages" autocomplete="off">
             {% for language in config.LANGUAGES %}
                 <option value="{{ language|lower }}">{{ language|title }}</option>
             {% endfor %}
@@ -64,7 +64,7 @@
         <div class="paste-attachments-container section-label">
             <p class="sans-serif regular size-1 light-gray less-spaced">PASTE ATTACHMENTS</p>
             <div class="attachments-upload-section">
-                <a href="#" class="attachments-browse-button btn btn-default sans-serif semibold size-1 gray less-spaced">BROWSE FILES...</a>
+                <a href="#" class="attachments-browse-button btn btn-outline-dark sans-serif semibold size-1 gray less-spaced">BROWSE FILES...</a>
                 {% if config.MAX_ATTACHMENT_SIZE > 0 %}
                     <span class="max-size-notice sans-serif regular size-1 light-gray less-spaced">Max size {{ config.MAX_ATTACHMENT_SIZE }} MB</span>
                 {% endif %}

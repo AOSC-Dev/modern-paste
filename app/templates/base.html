@@ -8,7 +8,7 @@
 
         {{ import_css([
             '//cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css',
-            '//cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/css/bootstrap.min.css',
+            '//cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css',
             '//cdn.jsdelivr.net/npm/pace-js@1.0.2/themes/blue/pace-theme-minimal.css',
             'stylesheet.css',
         ])|safe }}
@@ -18,7 +18,7 @@
             '//cdn.jsdelivr.net/npm/jquery.easing@1.4.1/jquery.easing.min.js',
             '//cdn.jsdelivr.net/npm/google-closure-library@20200101.0.0/closure/goog/base.js',
             '//cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js',
-            '//cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/js/bootstrap.min.js',
+            '//cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.bundle.min.js',
             'universal/CommonController.js',
             'universal/SplashController.js',
             'universal/URIController.js',
@@ -92,21 +92,13 @@
                     </span>
                 </div>
             </div>
-            <div id="user-header-dropdown">
+            <div class="dropdown-menu dropdown-menu-right" id="user-header-dropdown">
                 {% if current_user.is_authenticated %}
-                    <p class="dropdown-item light-link sans-serif semibold gray size-2 spaced">
-                        <a href="{{ uri('user', 'UserAccountInterfaceURI') }}">MY ACCOUNT</a>
-                    </p>
-                    <p class="dropdown-item light-link sans-serif semibold gray size-2 spaced">
-                        <a href="{{ uri('user', 'UserLogoutInterfaceURI') }}">LOGOUT</a>
-                    </p>
+                    <a class="dropdown-item light-link sans-serif semibold gray size-2 spaced" href="{{ uri('user', 'UserAccountInterfaceURI') }}">MY ACCOUNT</a>
+                    <a class="dropdown-item light-link sans-serif semibold gray size-2 spaced" href="{{ uri('user', 'UserLogoutInterfaceURI') }}">LOGOUT</a>
                 {% else %}
-                    <p class="dropdown-item light-link sans-serif semibold gray size-2 spaced">
-                        <a href="{{ uri('user', 'UserLoginInterfaceURI') }}">LOGIN</a>
-                    </p>
-                    <p class="dropdown-item light-link sans-serif semibold gray size-2 spaced">
-                        <a href="{{ uri('user', 'UserRegisterInterfaceURI') }}">REGISTER</a>
-                    </p>
+                    <a class="dropdown-item light-link sans-serif semibold gray size-2 spaced" href="{{ uri('user', 'UserLoginInterfaceURI') }}">LOGIN</a>
+                    <a class="dropdown-item light-link sans-serif semibold gray size-2 spaced" href="{{ uri('user', 'UserRegisterInterfaceURI') }}">REGISTER</a>
                 {% endif %}
             </div>
         {% endblock %}
