@@ -8,12 +8,12 @@
     {{ super() }}
 
     {{ import_css([
-        'lib/codemirror/lib/codemirror.css',
+        '//cdn.jsdelivr.net/npm/codemirror@5.50.2/lib/codemirror.css',
     ])|safe }}
 
     {{ import_js([
-        'lib/codemirror/lib/codemirror.js',
-        'lib/codemirror/addon/mode/simple.js',
+        '//cdn.jsdelivr.net/npm/codemirror@5.50.2/lib/codemirror.min.js',
+        '//cdn.jsdelivr.net/npm/codemirror@5.50.2/addon/mode/simple.js',
         'paste/ViewController.js',
     ])|safe }}
 

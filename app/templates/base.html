@@ -7,18 +7,18 @@
         <title>{% block title %}{% endblock %}</title>
 
         {{ import_css([
-            'lib/font-awesome/css/font-awesome.min.css',
-            'lib/bootstrap/dist/css/bootstrap.min.css',
-            'lib/pace/themes/blue/pace-theme-minimal.css',
+            '//cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css',
+            '//cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/css/bootstrap.min.css',
+            '//cdn.jsdelivr.net/npm/pace-js@1.0.2/themes/blue/pace-theme-minimal.css',
             'stylesheet.css',
         ])|safe }}
 
         {{ import_js([
-            'lib/jquery/jquery.min.js',
-            'lib/jquery-easing/jquery.easing.min.js',
-            'lib/closure-library/closure/goog/base.js',
-            'lib/pace/pace.min.js',
-            'lib/bootstrap/dist/js/bootstrap.min.js',
+            '//cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js',
+            '//cdn.jsdelivr.net/npm/jquery.easing@1.4.1/jquery.easing.min.js',
+            '//cdn.jsdelivr.net/npm/google-closure-library@20200101.0.0/closure/goog/base.js',
+            '//cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js',
+            '//cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/js/bootstrap.min.js',
             'universal/CommonController.js',
             'universal/SplashController.js',
             'universal/URIController.js',

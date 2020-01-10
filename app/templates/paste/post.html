@@ -8,21 +8,21 @@
     {{ super() }}
 
     {{ import_css([
-        'lib/date-time-picker/jquery.datetimepicker.css',
-        'lib/codemirror/lib/codemirror.css',
+        '//cdn.jsdelivr.net/npm/jquery-datetimepicker@2.5.21/build/jquery.datetimepicker.min.css',
+        '//cdn.jsdelivr.net/npm/codemirror@5.50.2/lib/codemirror.css',
     ])|safe }}
 
     {{ import_js([
-        'lib/date-time-picker/build/jquery.datetimepicker.full.min.js',
-        'lib/codemirror/lib/codemirror.js',
-        'lib/codemirror/addon/mode/simple.js',
+        '//cdn.jsdelivr.net/npm/jquery-datetimepicker@2.5.21/build/jquery.datetimepicker.full.min.js',
+        '//cdn.jsdelivr.net/npm/codemirror@5.50.2/lib/codemirror.min.js',
+        '//cdn.jsdelivr.net/npm/codemirror@5.50.2/addon/mode/simple.js',
         'paste/PostController.js',
     ])|safe }}
 
     {% if config.BUILD_ENVIRONMENT == 'dev' %}
         {% for language in config.LANGUAGES %}
             {% if language != 'text' %}
-                {{ import_js(['lib/codemirror/mode/' ~ language ~ '/' ~ language ~ '.js'], defer=True)|safe }}
+                {{ import_js(['//cdn.jsdelivr.net/npm/codemirror@5.50.2/mode/' ~ language ~ '/' ~ language ~ '.js'], defer=True)|safe }}
             {% endif %}
         {% endfor %}
     {% else %}
