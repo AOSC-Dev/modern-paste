@@ -4,6 +4,7 @@
 <head>
     {% block head %}
         <meta charset="UTF-8">
+        <link rel="icon" href="https://aosc.io/assets/img/aosc.png">
         <title>{% block title %}{% endblock %}</title>
 
         {{ import_css([
@@ -39,33 +40,18 @@
 
     <div id="menu-panel">
         <div class="title">
-            <span class="sans-serif light white size-6 spaced">modern</span><span class="sans-serif regular white size-6 spaced">paste</span>
+            <span class="sans-serif light white size-6 spaced">AOSC</span>&nbsp;<span class="sans-serif regular white size-6 spaced">Pastebin</span>
         </div>
         <p class="menu-panel-item dark-link-alt sans-serif regular white size-3 spaced">
             <a href="{{ uri('paste', 'PastePostInterfaceURI') }}">NEW PASTE</a>
         </p>
-        {% if current_user.is_authenticated %}
-            <p class="menu-panel-item dark-link-alt sans-serif regular white size-3 spaced">
-                <a href="{{ uri('user', 'UserAccountInterfaceURI') }}">MY ACCOUNT</a>
-            </p>
-        {% else %}
-            <p class="menu-panel-item dark-link-alt sans-serif regular white size-3 spaced">
-                <a href="{{ uri('user', 'UserLoginInterfaceURI') }}">LOGIN</a>
-            </p>
-            <p class="menu-panel-item dark-link-alt sans-serif regular white size-3 spaced">
-                <a href="{{ uri('user', 'UserRegisterInterfaceURI') }}">REGISTER</a>
-            </p>
-        {% endif %}
         <p class="menu-panel-item dark-link-alt sans-serif regular white size-3 spaced">
             <a href="{{ uri('paste', 'PasteArchiveInterfaceURI') }}">ARCHIVE</a>
         </p>
-        <p class="menu-panel-item dark-link-alt sans-serif regular white size-3 spaced">
-            <a href="{{ uri('misc', 'APIDocumentationInterfaceURI') }}">API</a>
-        </p>
         <p class="open-source-note dark-link sans-serif light light-gray size-2">
-            <span class="sans-serif regular">modernpaste</span> is a modern, feature-rich, python-powered open source alternative to pastebin
+            AOSC Pastebin is based on modernpaste.
             <br/><br/>
-            <a href="https://github.com/LINKIWI/modern-paste">repository on github</a>
+            <a href="https://github.com/AOSC-Dev/modern-paste">modernpaste repository on github</a>
         </p>
     </div>
 
@@ -77,29 +63,11 @@
                         <img class="menu-button" src="/static/img/icons/menu.png" />
                         <img class="hidden" src="/static/img/icons/cross.png" />
                         <a href="{{ uri('main', 'HomeURI') }}">
-                            <span class="sans-serif light gray size-5 spaced">modern</span><span class="sans-serif regular gray size-5 spaced">paste</span>
+                            <span class="sans-serif light gray size-5 spaced">AOSC</span>&nbsp;<span class="sans-serif regular gray size-5 spaced">Pastebin</span>
                         </a>
                     </span>
-                    <span class="user-section">
-                        <span class="user-header sans-serif semibold size-2 less-spaced">
-                            {% if current_user.is_authenticated %}
-                                {{ current_user.username|upper }}
-                            {% else %}
-                                ANONYMOUS
-                            {% endif %}
-                            <img class="user-menu-arrow" src="/static/img/icons/dark-arrows.png">
-                        </span>
-                    </span>
+                    <span class="user-section"></span>
                 </div>
-            </div>
-            <div class="dropdown-menu dropdown-menu-right" id="user-header-dropdown">
-                {% if current_user.is_authenticated %}
-                    <a class="dropdown-item light-link sans-serif semibold gray size-2 spaced" href="{{ uri('user', 'UserAccountInterfaceURI') }}">MY ACCOUNT</a>
-                    <a class="dropdown-item light-link sans-serif semibold gray size-2 spaced" href="{{ uri('user', 'UserLogoutInterfaceURI') }}">LOGOUT</a>
-                {% else %}
-                    <a class="dropdown-item light-link sans-serif semibold gray size-2 spaced" href="{{ uri('user', 'UserLoginInterfaceURI') }}">LOGIN</a>
-                    <a class="dropdown-item light-link sans-serif semibold gray size-2 spaced" href="{{ uri('user', 'UserRegisterInterfaceURI') }}">REGISTER</a>
-                {% endif %}
             </div>
         {% endblock %}
         <div class="content">
